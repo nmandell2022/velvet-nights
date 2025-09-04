@@ -1,54 +1,99 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { Music3, Martini, ShieldCheck, Moon, Mail, Instagram, CalendarDays, Sparkles, MapPin } from "lucide-react";
+import {
+  Music3,
+  Martini,
+  ShieldCheck,
+  Moon,
+  Mail,
+  Instagram,
+  CalendarDays,
+  Sparkles,
+  MapPin,
+} from "lucide-react";
 
+// Background images for hero & gallery
 const bgImages = [
   "https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=2070&auto=format&fit=crop",
   "https://images.unsplash.com/photo-1481068164146-e8beb686f4d2?q=80&w=2069&auto=format&fit=crop",
   "https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=2069&auto=format&fit=crop",
   "https://images.unsplash.com/photo-1504805572947-34fad45aed93?q=80&w=2070&auto=format&fit=crop",
   "https://images.unsplash.com/photo-1525385133512-2f3bdd039054?q=80&w=2069&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=2100&auto=format&fit=crop"
+  "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=2100&auto=format&fit=crop",
 ];
 
-function useInterval(callback, delay) {
+// tiny interval hook
+function useInterval(cb, delay) {
   useEffect(() => {
-    const id = setInterval(callback, delay);
+    const id = setInterval(cb, delay);
     return () => clearInterval(id);
-  }, [callback, delay]);
+  }, [cb, delay]);
 }
 
 const AgeGate = ({ onEnter }) => (
   <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur">
-    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-lg w-[92%] rounded-2xl p-8 text-center border border-white/10 bg-gradient-to-b from-neutral-900 to-black shadow-2xl">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="max-w-lg w-[92%] rounded-2xl p-8 text-center border border-white/10 bg-gradient-to-b from-neutral-900 to-black shadow-2xl"
+    >
       <div className="mx-auto mb-6 h-14 w-14 grid place-content-center rounded-full bg-rose-900/40 ring-1 ring-rose-500/30">
         <Moon className="h-7 w-7 text-rose-300" />
       </div>
       <h2 className="text-3xl font-semibold tracking-tight text-white">Velvet Nights</h2>
-      <p className="mt-2 text-neutral-300">A private jazz & cocktail experience. You must be 21+ to enter.</p>
+      <p className="mt-2 text-neutral-300">
+        A private jazz & cocktail experience. You must be 21+ to enter.
+      </p>
       <div className="mt-6 flex items-center justify-center gap-3">
-        <button onClick={onEnter} className="px-5 py-3 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-medium shadow-lg shadow-rose-900/30 transition">I am 21+</button>
-        <a href="https://www.responsibility.org/" target="_blank" rel="noreferrer" className="px-5 py-3 rounded-xl border border-white/15 text-neutral-200 hover:bg-white/5 transition">Learn more</a>
+        <button
+          onClick={onEnter}
+          className="px-5 py-3 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-medium shadow-lg shadow-rose-900/30 transition"
+        >
+          I am 21+
+        </button>
+        <a
+          href="https://www.responsibility.org/"
+          target="_blank"
+          rel="noreferrer"
+          className="px-5 py-3 rounded-xl border border-white/15 text-neutral-200 hover:bg-white/5 transition"
+        >
+          Learn more
+        </a>
       </div>
-      <p className="mt-4 text-xs text-neutral-400">By entering, you agree to our House Rules & Code of Conduct.</p>
+      <p className="mt-4 text-xs text-neutral-400">
+        By entering, you agree to our House Rules & Code of Conduct.
+      </p>
     </motion.div>
   </div>
 );
 
 const FeatureCard = ({ icon, title, copy }) => (
-  <motion.div initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.4 }} className="rounded-2xl p-6 border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] transition shadow-lg">
-    <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-rose-900/30 ring-1 ring-rose-700/30">{icon}</div>
+  <motion.div
+    initial={{ opacity: 0, y: 12 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true, amount: 0.4 }}
+    className="rounded-2xl p-6 border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] transition shadow-lg"
+  >
+    <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-rose-900/30 ring-1 ring-rose-700/30">
+      {icon}
+    </div>
     <h3 className="text-lg font-semibold text-white">{title}</h3>
     <p className="mt-2 text-sm text-neutral-300 leading-relaxed">{copy}</p>
   </motion.div>
 );
 
 const Input = (props) => (
-  <input {...props} className={`w-full rounded-xl bg-white/[0.06] border border-white/10 px-4 py-3 text-white placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-rose-500 ${props.className || ""}`} />
+  <input
+    {...props}
+    className={`w-full rounded-xl bg-white/[0.06] border border-white/10 px-4 py-3 text-white placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-rose-500 ${props.className || ""}`}
+  />
 );
 
 const TextArea = (props) => (
-  <textarea {...props} className={`w-full min-h-[120px] rounded-2xl bg-white/[0.06] border border-white/10 px-4 py-3 text-white placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-rose-500 ${props.className || ""}`} />
+  <textarea
+    {...props}
+    className={`w-full min-h-[120px] rounded-xl bg-white/[0.06] border border-white/10 px-4 py-3 text-white placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-rose-500 ${props.className || ""}`}
+  />
 );
 
 const Section = ({ id, title, subtitle, children }) => (
@@ -75,11 +120,22 @@ export default function VelvetNights() {
     if (ok === "true") setEntered(true);
   }, []);
 
-  const onEnter = () => { localStorage.setItem("velvet_age_ok", "true"); setEntered(true); };
+  const onEnter = () => {
+    localStorage.setItem("velvet_age_ok", "true");
+    setEntered(true);
+  };
 
   const [form, setForm] = useState({
-    name: "", email: "", phone: "", partySize: "2", preferredNight: "",
-    seating: "Table", heardFrom: "", styleNotes: "", message: "", acceptRules: false,
+    name: "",
+    email: "",
+    phone: "",
+    partySize: "2",
+    preferredNight: "",
+    seating: "Table",
+    heardFrom: "",
+    styleNotes: "",
+    message: "",
+    acceptRules: false,
   });
 
   const handleChange = (e) => {
@@ -89,23 +145,46 @@ export default function VelvetNights() {
 
   const submit = async (e) => {
     e.preventDefault();
-    if (!form.acceptRules) { alert("Please confirm you agree to the House Rules."); return; }
+    if (!form.acceptRules) {
+      alert("Please confirm you agree to the House Rules.");
+      return;
+    }
+    // Demo behavior: store locally. Swap this for a Formspree/API POST later.
     const payload = { ...form, submittedAt: new Date().toISOString() };
     localStorage.setItem("velvet_guest_request", JSON.stringify(payload));
     alert("You're on the list. We'll be in touch soon ✨");
-    setForm({ name: "", email: "", phone: "", partySize: "2", preferredNight: "", seating: "Table", heardFrom: "", styleNotes: "", message: "", acceptRules: false });
+    setForm({
+      name: "",
+      email: "",
+      phone: "",
+      partySize: "2",
+      preferredNight: "",
+      seating: "Table",
+      heardFrom: "",
+      styleNotes: "",
+      message: "",
+      acceptRules: false,
+    });
   };
 
-  const bgStyle = useMemo(() => ({ backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(0,0,0,0.9)), url(${bgImages[bgIndex]})` }), [bgIndex]);
+  const bgStyle = useMemo(
+    () => ({
+      backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(0,0,0,0.9)), url(${bgImages[bgIndex]})`,
+    }),
+    [bgIndex]
+  );
 
   return (
     <div className="min-h-screen text-neutral-100" style={{ backgroundColor: "#0b0b0b" }}>
       {!entered && <AgeGate onEnter={onEnter} />}
 
+      {/* Sticky Nav */}
       <header className="sticky top-0 z-40 border-b border-white/10 bg-black/60 backdrop-blur">
         <nav className="mx-auto max-w-6xl px-6 h-16 flex items-center justify-between">
           <a href="#home" className="flex items-center gap-2">
-            <div className="h-8 w-8 grid place-content-center rounded-lg bg-rose-900/50 ring-1 ring-rose-700/40"><Sparkles className="h-4 w-4 text-rose-300" /></div>
+            <div className="h-8 w-8 grid place-content-center rounded-lg bg-rose-900/50 ring-1 ring-rose-700/40">
+              <Sparkles className="h-4 w-4 text-rose-300" />
+            </div>
             <span className="font-semibold tracking-wide">Velvet Nights</span>
           </a>
           <div className="hidden md:flex items-center gap-6 text-sm">
@@ -117,28 +196,62 @@ export default function VelvetNights() {
             <a href="#contact" className="hover:text-white/90 text-neutral-300">Contact</a>
           </div>
           <div className="flex items-center gap-3">
-            <a href="#rsvp" className="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-sm font-medium shadow">Join the List</a>
+            <a href="#rsvp" className="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-sm font-medium shadow">
+              Join the List
+            </a>
           </div>
         </nav>
       </header>
 
+      {/* Hero */}
       <section id="home" className="relative">
-        <div className="relative h-[78vh] w-full bg-cover bg-center transition-[background-image] duration-[2000ms]" style={bgStyle}>
+        <div
+          className="relative h-[78vh] w-full bg-cover bg-center transition-[background-image] duration-[2000ms]"
+          style={bgStyle}
+        >
           <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/40 to-black/90" />
           <div className="relative z-10 mx-auto max-w-6xl px-6 h-full flex items-center">
             <div>
-              <motion.h1 initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="text-4xl md:text-6xl font-semibold tracking-tight text-white">Velvet Nights</motion.h1>
-              <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }} className="mt-4 max-w-xl text-neutral-200 text-lg">A clandestine jazz & cocktail lounge—elegant, intimate, and unapologetically classy. Dress to enchant.</motion.p>
-              <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="mt-8 flex flex-col sm:flex-row gap-3">
-                <a href="#rsvp" className="px-6 py-3 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-medium shadow-lg shadow-rose-900/30">Request Invitation</a>
-                <a href="#events" className="px-6 py-3 rounded-xl border border-white/15 text-white hover:bg-white/5">Upcoming Soirées</a>
+              <motion.h1
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 }}
+                className="text-4xl md:text-6xl font-semibold tracking-tight text-white"
+              >
+                Velvet Nights
+              </motion.h1>
+              <motion.p
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.25 }}
+                className="mt-4 max-w-xl text-neutral-200 text-lg"
+              >
+                A clandestine jazz & cocktail lounge—elegant, intimate, and unapologetically classy. Dress to enchant.
+              </motion.p>
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 }}
+                className="mt-8 flex flex-col sm:flex-row gap-3"
+              >
+                <a href="#rsvp" className="px-6 py-3 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-medium shadow-lg shadow-rose-900/30">
+                  Request Invitation
+                </a>
+                <a href="#events" className="px-6 py-3 rounded-xl border border-white/15 text-white hover:bg-white/5">
+                  Upcoming Soirées
+                </a>
               </motion.div>
             </div>
           </div>
         </div>
       </section>
 
-      <Section id="about" title="An Evening Draped in Velvet" subtitle="Velvet Nights is not a strip club. It’s an ode to live jazz, candlelit ambiance, refined cocktails, and the timeless allure of feminine energy—celebrated with respect and class.">
+      {/* About */}
+      <Section
+        id="about"
+        title="An Evening Draped in Velvet"
+        subtitle="Velvet Nights is not a strip club. It’s an ode to live jazz, candlelit ambiance, refined cocktails, and the timeless allure of feminine energy—celebrated with respect and class."
+      >
         <div className="grid md:grid-cols-3 gap-6">
           <FeatureCard icon={<Music3 className="h-6 w-6 text-rose-300" />} title="Live Jazz & Soul" copy="Curated sets from rotating artists set the tone—smoky, sultry, and smooth." />
           <FeatureCard icon={<Martini className="h-6 w-6 text-rose-300" />} title="Cocktails, Reimagined" copy="Classic standards meet modern craft. Zero-proof offerings crafted with the same attention." />
@@ -146,6 +259,7 @@ export default function VelvetNights() {
         </div>
       </Section>
 
+      {/* Experience */}
       <Section id="experience" title="House Rules & Dress Code" subtitle="We curate a space that feels rare—private, refined, and safe for everyone.">
         <div className="grid lg:grid-cols-2 gap-6">
           <div className="rounded-2xl overflow-hidden border border-white/10 bg-white/[0.03]">
@@ -171,18 +285,32 @@ export default function VelvetNights() {
         </div>
       </Section>
 
+      {/* Events */}
       <Section id="events" title="Upcoming Soirées" subtitle="Limited-capacity reservations. Private hostings available upon request.">
         <div className="grid md:grid-cols-2 gap-6">
-          {[1,2].map((i) => (
+          {[1, 2].map((i) => (
             <div key={i} className="rounded-2xl overflow-hidden border border-white/10 bg-white/[0.03]">
-              <div className="aspect-[16/9] bg-cover bg-center" style={{ backgroundImage: `url(${bgImages[(bgIndex + i) % bgImages.length]})` }} />
+              <div
+                className="aspect-[16/9] bg-cover bg-center"
+                style={{ backgroundImage: `url(${bgImages[(bgIndex + i) % bgImages.length]})` }}
+              />
               <div className="p-6">
-                <div className="flex items-center gap-2 text-rose-300 text-sm"><CalendarDays className="h-4 w-4" /> Date TBA • Detroit Area</div>
-                <h3 className="mt-2 text-xl font-semibold text-white">Velvet Nights {i === 1 ? "Soirée" : "After-Hours"}</h3>
-                <p className="mt-2 text-neutral-300 text-sm">An intimate evening of live jazz, candlelight, and handcrafted cocktails. Invitations prioritized for the Guest List.</p>
+                <div className="flex items-center gap-2 text-rose-300 text-sm">
+                  <CalendarDays className="h-4 w-4" /> Date TBA • Detroit Area
+                </div>
+                <h3 className="mt-2 text-xl font-semibold text-white">
+                  Velvet Nights {i === 1 ? "Soirée" : "After-Hours"}
+                </h3>
+                <p className="mt-2 text-neutral-300 text-sm">
+                  An intimate evening of live jazz, candlelight, and handcrafted cocktails. Invitations prioritized for the Guest List.
+                </p>
                 <div className="mt-4 flex items-center gap-3">
-                  <a href="#rsvp" className="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-sm font-medium">Request Invite</a>
-                  <button className="px-4 py-2 rounded-xl border border-white/15 text-white text-sm hover:bg-white/5">Private Booking</button>
+                  <a href="#rsvp" className="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-sm font-medium">
+                    Request Invite
+                  </a>
+                  <button className="px-4 py-2 rounded-xl border border-white/15 text-white text-sm hover:bg-white/5">
+                    Private Booking
+                  </button>
                 </div>
               </div>
             </div>
@@ -190,7 +318,164 @@ export default function VelvetNights() {
         </div>
       </Section>
 
+      {/* Gallery */}
       <Section id="gallery" title="A Glimpse of the Mood">
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-          {bgImages.concat(bgImages.slice(0,3)).map((src, idx) => (
-            <motion.div key={idx}
+          {bgImages.concat(bgImages.slice(0, 3)).map((src, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true, amount: 0.3 }}
+              className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/10"
+            >
+              <img
+                src={src}
+                alt="Velvet Nights ambiance"
+                className="h-full w-full object-cover hover:scale-105 transition-transform duration-700"
+              />
+            </motion.div>
+          ))}
+        </div>
+      </Section>
+
+      {/* RSVP / Guest List */}
+      <Section id="rsvp" title="Join the Guest List" subtitle="Request an invitation and receive first access when new dates drop.">
+        <div className="grid lg:grid-cols-2 gap-8">
+          <form onSubmit={submit} className="rounded-2xl p-6 border border-white/10 bg-white/[0.03]">
+            <div className="grid md:grid-cols-2 gap-4">
+              <div>
+                <label className="text-sm text-neutral-300">Full Name</label>
+                <Input name="name" value={form.name} onChange={handleChange} placeholder="Jordan Avery" required />
+              </div>
+              <div>
+                <label className="text-sm text-neutral-300">Email</label>
+                <Input type="email" name="email" value={form.email} onChange={handleChange} placeholder="you@example.com" required />
+              </div>
+              <div>
+                <label className="text-sm text-neutral-300">Phone (optional)</label>
+                <Input name="phone" value={form.phone} onChange={handleChange} placeholder="(313) 555-0123" />
+              </div>
+              <div>
+                <label className="text-sm text-neutral-300">Party Size</label>
+                <Input name="partySize" type="number" min={1} max={6} value={form.partySize} onChange={handleChange} />
+              </div>
+              <div>
+                <label className="text-sm text-neutral-300">Preferred Night</label>
+                <Input name="preferredNight" value={form.preferredNight} onChange={handleChange} placeholder="Fridays, late" />
+              </div>
+              <div>
+                <label className="text-sm text-neutral-300">Seating Preference</label>
+                <select
+                  name="seating"
+                  value={form.seating}
+                  onChange={handleChange}
+                  className="w-full rounded-xl bg-white/[0.06] border border-white/10 px-4 py-3 text-white"
+                >
+                  <option value="Table">Table</option>
+                  <option value="Bar">Bar</option>
+                  <option value="Lounge">Lounge</option>
+                  <option value="No Preference">No Preference</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="mt-4">
+              <label className="text-sm text-neutral-300">How did you hear about us?</label>
+              <Input name="heardFrom" value={form.heardFrom} onChange={handleChange} placeholder="Friend, Instagram, Flyer…" />
+            </div>
+            <div className="mt-4">
+              <label className="text-sm text-neutral-300">Style Notes (optional)</label>
+              <Input name="styleNotes" value={form.styleNotes} onChange={handleChange} placeholder="Black velvet, gold accents…" />
+            </div>
+            <div className="mt-4">
+              <label className="text-sm text-neutral-300">Anything else we should know?</label>
+              <TextArea
+                name="message"
+                value={form.message}
+                onChange={handleChange}
+                placeholder="Accessibility needs, birthday, anniversary, brand collaboration, etc."
+              />
+            </div>
+            <div className="mt-4 flex items-center gap-2">
+              <input
+                id="rules"
+                name="acceptRules"
+                type="checkbox"
+                checked={form.acceptRules}
+                onChange={handleChange}
+                className="h-5 w-5 rounded border-white/10 bg-white/10"
+              />
+              <label htmlFor="rules" className="text-sm text-neutral-300">
+                I agree to the House Rules & Code of Conduct.
+              </label>
+            </div>
+            <div className="mt-6">
+              <button
+                type="submit"
+                className="w-full px-6 py-3 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-medium shadow-lg shadow-rose-900/30"
+              >
+                Request Invitation
+              </button>
+            </div>
+            <p className="mt-3 text-xs text-neutral-400">We value your privacy. Your details will never be sold.</p>
+          </form>
+
+          <div className="rounded-2xl p-6 border border-white/10 bg-white/[0.03]">
+            <h3 className="text-xl font-semibold text-white">Private Hire</h3>
+            <p className="mt-2 text-neutral-300 text-sm">
+              Host a brand launch, birthday, or elegant after-hours gathering. We handle music curation, lighting, and bar menu design. Discretion guaranteed.
+            </p>
+            <div className="mt-6 grid sm:grid-cols-2 gap-4">
+              <FeatureCard icon={<MapPin className="h-6 w-6 text-rose-300" />} title="Detroit Area" copy="Exact location revealed to confirmed guests 24 hours before doors." />
+              <FeatureCard icon={<ShieldCheck className="h-6 w-6 text-rose-300" />} title="Secure & Discreet" copy="Limited capacity, vetted list, and a respectful environment—always." />
+            </div>
+            <div className="mt-6">
+              <a
+                href="mailto:info@velvetnights.co"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-white/15 text-white hover:bg-white/5"
+              >
+                <Mail className="h-4 w-4" /> Email Us
+              </a>
+            </div>
+          </div>
+        </div>
+      </Section>
+
+      {/* Contact */}
+      <Section id="contact" title="Contact & Social">
+        <div className="grid md:grid-cols-3 gap-6">
+          <div className="rounded-2xl p-6 border border-white/10 bg-white/[0.03]">
+            <div className="text-sm text-neutral-300">General</div>
+            <a href="mailto:info@velvetnights.co" className="mt-1 block text-white">
+              info@velvetnights.co
+            </a>
+          </div>
+          <div className="rounded-2xl p-6 border border-white/10 bg-white/[0.03]">
+            <div className="text-sm text-neutral-300">Press & Collabs</div>
+            <a href="mailto:press@velvetnights.co" className="mt-1 block text-white">
+              press@velvetnights.co
+            </a>
+          </div>
+          <div className="rounded-2xl p-6 border border-white/10 bg-white/[0.03]">
+            <div className="text-sm text-neutral-300">Social</div>
+            <a href="#" className="mt-1 inline-flex items-center gap-2 text-white">
+              <Instagram className="h-4 w-4" /> @velvetnights
+            </a>
+          </div>
+        </div>
+      </Section>
+
+      <footer className="border-t border-white/10 py-10">
+        <div className="mx-auto max-w-6xl px-6 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-neutral-400">
+          <div>© {new Date().getFullYear()} Velvet Nights. All rights reserved.</div>
+          <div className="flex items-center gap-4">
+            <a href="#about" className="hover:text-white/80">About</a>
+            <a href="#experience" className="hover:text-white/80">House Rules</a>
+            <a href="#rsvp" className="hover:text-white/80">Guest List</a>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
